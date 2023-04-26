@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iib-mq-dev-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iib-mq-dev
+  template:
+    metadata:
+      labels:
+        app: iib-mq-dev
+    spec:
+      containers:
+        - name: iib-mq-dev
+          image: ibmcom/iib-mq-server
+          env:
+            - name: LICENSE
+              value: accept
+            - name: NODENAME
+              value: IIB10NODE_DEV
+            - name: SERVERNAME
+              value: IIB10SERVER_DEV
+            - name: MQ_QMGR_NAME
+              value: IIB10QM1_DEV
+            - name: MQ_APP_PASSWORD
+              value: mqadmin1
+          ports:
+            - containerPort: 1414
+            - containerPort: 1616
+          command: [". /opt/ibm/iib-10.0.0.11/server/bin/mqsiprofile"]
+
