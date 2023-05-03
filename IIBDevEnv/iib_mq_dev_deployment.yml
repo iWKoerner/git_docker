@@ -29,5 +29,8 @@ spec:
           ports:
             - containerPort: 1414
             - containerPort: 1616
-          command: [". /opt/ibm/iib-10.0.0.11/server/bin/mqsiprofile"]
+          lifecycle:
+           postStart:
+            exec:
+             command: ['/bin/bash','-c','sudo echo "root:1234" | chpasswd']
 
